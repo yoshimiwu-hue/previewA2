@@ -34,12 +34,32 @@
             line-height: 1.6;
         }
 
+        /* 九宮格自動裁切定位系統（對應 stickers.png） */
+        .sprite {
+            background-image: url('stickers.png');
+            background-size: 300% 300%;
+            background-repeat: no-repeat;
+            background-color: #ffffff;
+            display: inline-block;
+        }
+        /* 第 1 排：抱書女孩、背包男孩、揮手女孩 */
+        .pos-0 { background-position: 0% 0%; }
+        .pos-1 { background-position: 50% 0%; }
+        .pos-2 { background-position: 100% 0%; }
+        /* 第 2 排：竹子熊貓、讀書熊貓、地球儀熊貓 */
+        .pos-3 { background-position: 0% 50%; }
+        .pos-4 { background-position: 50% 50%; }
+        .pos-5 { background-position: 100% 50%; }
+        /* 第 3 排：書本盆栽、珍珠奶茶、AI筆電耳機 */
+        .pos-6 { background-position: 0% 100%; }
+        .pos-7 { background-position: 50% 100%; }
+        .pos-8 { background-position: 100% 100%; }
+
         /* 頂部設計感橫幅 */
         .hero {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #0d9488 100%);
             color: #ffffff;
-            padding: 56px 20px 68px;
-            text-align: center;
+            padding: 52px 20px 76px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
@@ -48,13 +68,27 @@
         .hero::before {
             content: "";
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 420px;
-            height: 420px;
+            top: -40%;
+            right: -5%;
+            width: 460px;
+            height: 460px;
             background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
         }
 
         .badge-top {
@@ -72,22 +106,102 @@
 
         .hero h1 {
             margin: 0;
-            font-size: clamp(24px, 4vw, 34px);
+            font-size: clamp(24px, 3.6vw, 34px);
             font-weight: 700;
             letter-spacing: 0.02em;
+            line-height: 1.3;
         }
 
         .hero p {
-            margin: 12px auto 0;
-            max-width: 600px;
+            margin: 14px 0 0;
+            max-width: 540px;
             font-size: 15px;
             color: #cbd5e1;
+        }
+
+        /* 右側主視覺角色組合區 */
+        .hero-visual {
+            position: relative;
+            flex-shrink: 0;
+            width: 280px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 中央主角色：讀書熊貓 */
+        .hero-main-avatar {
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28);
+            z-index: 2;
+        }
+
+        /* 衛星小頭像：抱書女孩與揮手女孩 */
+        .hero-sub-avatar {
+            position: absolute;
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+            z-index: 3;
+        }
+
+        .sub-left {
+            top: 8px;
+            left: 6px;
+        }
+
+        .sub-right {
+            bottom: 8px;
+            right: 6px;
+        }
+
+        .floating-pill {
+            position: absolute;
+            background: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 999px;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.18);
+            white-space: nowrap;
+            z-index: 4;
+        }
+
+        .pill-top-right {
+            top: 12px;
+            right: -6px;
+            color: #0f766e;
+        }
+
+        .pill-bottom-left {
+            bottom: 12px;
+            left: -8px;
+            color: #1e3a8a;
+        }
+
+        @media (max-width: 768px) {
+            .hero-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text {
+                text-align: center;
+            }
+            .hero p {
+                margin: 12px auto 0;
+            }
         }
 
         /* 主容器 */
         .container {
             max-width: 1140px;
-            margin: -32px auto 60px;
+            margin: -34px auto 60px;
             padding: 0 20px;
             position: relative;
             z-index: 2;
@@ -95,7 +209,7 @@
 
         /* 快速篩選按鈕列 */
         .filter-bar {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(10px);
             padding: 12px 18px;
             border-radius: 16px;
@@ -142,8 +256,8 @@
         /* 單張課程卡片 */
         .lesson-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 18px;
+            padding: 22px 24px;
             text-decoration: none;
             color: inherit;
             border: 1px solid var(--border-color);
@@ -153,11 +267,6 @@
             justify-content: space-between;
             transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            overflow: hidden;
-        }
-
-        .lesson-card::top {
-            content: "";
         }
 
         .lesson-card:hover {
@@ -170,7 +279,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .lesson-badge {
@@ -179,7 +288,7 @@
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.08em;
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 8px;
         }
 
@@ -188,17 +297,20 @@
             color: #0f766e;
         }
 
-        .lesson-num-bg {
-            font-size: 28px;
-            font-weight: 700;
-            color: #f1f5f9;
-            line-height: 1;
-            user-select: none;
-            transition: color 0.28s ease;
+        /* 卡片右上角專屬九宮格小插畫 */
+        .card-sticker {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+            transition: transform 0.28s ease;
+            flex-shrink: 0;
         }
 
-        .lesson-card:hover .lesson-num-bg {
-            color: #e2e8f0;
+        .lesson-card:hover .card-sticker {
+            transform: scale(1.1) rotate(3deg);
+            border-color: var(--accent);
         }
 
         .lesson-title {
@@ -212,7 +324,7 @@
         .lesson-desc {
             font-size: 13.5px;
             color: var(--text-muted);
-            margin: 0 0 20px 0;
+            margin: 0 0 18px 0;
             line-height: 1.55;
         }
 
@@ -235,72 +347,3 @@
         .arrow-circle {
             width: 28px;
             height: 28px;
-            border-radius: 50%;
-            background: #f8fafc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s ease;
-        }
-
-        .lesson-card:hover .arrow-circle {
-            background: var(--accent);
-            color: #ffffff;
-            transform: translateX(4px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 24px;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-    </style>
-</head>
-<body>
-
-    <header class="hero">
-        <div class="badge-top">Modern Chinese Preview Portal</div>
-        <h1>AIオンライン中国語予習プラットフォーム</h1>
-        <p>《時代華語》レッスン別 予習・音声学習ポータル（全24課）</p>
-    </header>
-
-    <main class="container">
-        <!-- 篩選列 -->
-        <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterLessons('all', this)">すべて表示 (24課)</button>
-            <button class="filter-btn" onclick="filterLessons('1-8', this)">Lesson 1 – 8</button>
-            <button class="filter-btn" onclick="filterLessons('9-16', this)">Lesson 9 – 16</button>
-            <button class="filter-btn" onclick="filterLessons('17-24', this)">Lesson 17 – 24</button>
-        </div>
-
-        <!-- 24堂課卡片容器 -->
-        <div class="lesson-grid" id="lessonGrid"></div>
-    </main>
-
-    <footer>
-        © AIオンライン中国語予習プラットフォーム | 《時代華語》学習サポート
-    </footer>
-
-    <script>
-        // 您可以在這裡直接修改各課的課文標題與日文簡介！
-        const lessons = [
-            { num: 1,  title: "第1課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 2,  title: "第2課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 3,  title: "第3課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 4,  title: "第4課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 5,  title: "第5課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 6,  title: "第6課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 7,  title: "第7課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 8,  title: "第8課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 9,  title: "第9課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 10, title: "第10課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 11, title: "第11課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 12, title: "第12課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 13, title: "第13課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 14, title: "第14課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 15, title: "第15課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 16, title: "第16課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 17, title: "第17課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
-            { num: 18, title: "最近感冒的人很多", desc: "健康と身体の調子、症状の表現、薬局・病院でのやり取り、条件表現。" },
-            { num: 19, title: "第19課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
