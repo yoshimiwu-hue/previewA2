@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIオンライン中国語予習プラットフォーム</title>
+    <style>
+        :root {
+            --bg-color: #f7f8f9;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --primary: #34495e;
+            --accent: #2980b9;
+            --border-color: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Sans", "Meiryo", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: var(--card-bg);
+            padding: 40px 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+        }
+        h1 {
+            font-size: 26px;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-sub);
+            margin: 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-color: #cbd5e1;
+        }
+        .lesson-number {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .lesson-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0 0 8px 0;
+        }
+        .lesson-desc {
+            font-size: 14px;
+            color: var(--text-sub);
+            margin: 0 0 20px 0;
+        }
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            border-top: 1px solid #f1f5f9;
+            padding-top: 14px;
+        }
+        .card-footer span::after {
+            content: " →";
+            transition: transform 0.2s;
+        }
+        .card:hover .card-footer span::after {
+            transform: translateX(4px);
+        }
+        footer.site-footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AIオンライン中国語予習プラットフォーム</h1>
+        <p class="subtitle">《時代華語》レッスン別 予習・音声学習ポータル</p>
+    </header>
+
+    <div class="grid">
+        <!-- 第18課卡片 -->
+        <a href="lesson18.html" class="card">
+            <div>
+                <div class="lesson-number">LESSON 18</div>
+                <div class="lesson-title">最近感冒的人很多</div>
+                <div class="lesson-desc">健康と身体の調子、症状の表現、薬局・病院でのやり取り、条件表現。</div>
+            </div>
+            <div class="card-footer">
+                <span>予習ページへ進む</span>
+            </div>
+        </a>
+
+        <!-- 未來可以繼續新增其他課 -->
+        <!-- 
+        <a href="lesson19.html" class="card">
+            <div>
+                <div class="lesson-number">LESSON 19</div>
+                <div class="lesson-title">次回のテーマタイトル</div>
+                <div class="lesson-desc">レッスンの簡単な説明やキーワードをここに記載します。</div>
+            </div>
+            <div class="card-footer">
+                <span>予習ページへ進む</span>
+            </div>
+        </a>
+        -->
+    </div>
+
+    <footer class="site-footer">
+        &copy; 2026 台灣英里留學社 All Rights Reserved.
+    </footer>
+</div>
+
+</body>
+</html>
