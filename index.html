@@ -3,156 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIオンライン中国語予習プラットフォーム</title>
+    <title>AIオンライン中国語予習プラットフォーム | 《時代華語》</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f7f8f9;
+            --primary: #1e3a8a;
+            --accent: #0d9488;
+            --accent-light: #ccfbf1;
+            --bg-page: #f1f5f9;
             --card-bg: #ffffff;
-            --text-main: #2c3e50;
-            --text-sub: #7f8c8d;
-            --primary: #34495e;
-            --accent: #2980b9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
             --border-color: #e2e8f0;
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Sans", "Meiryo", sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Plus Jakarta Sans', 'Noto Sans JP', 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-page);
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
             color: var(--text-main);
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            margin: 0;
-            padding: 40px 20px;
         }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-        }
-        header {
+
+        /* 頂部設計感橫幅 */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #0d9488 100%);
+            color: #ffffff;
+            padding: 56px 20px 68px;
             text-align: center;
-            margin-bottom: 50px;
-            background: var(--card-bg);
-            padding: 40px 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
         }
-        h1 {
-            font-size: 26px;
-            color: var(--primary);
-            margin: 0 0 10px 0;
-            letter-spacing: 1px;
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
-        .subtitle {
-            font-size: 15px;
-            color: var(--text-sub);
+
+        .badge-top {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 5px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
             margin: 0;
+            font-size: clamp(24px, 4vw, 34px);
+            font-weight: 700;
+            letter-spacing: 0.02em;
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+
+        .hero p {
+            margin: 12px auto 0;
+            max-width: 600px;
+            font-size: 15px;
+            color: #cbd5e1;
         }
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
+
+        /* 主容器 */
+        .container {
+            max-width: 1140px;
+            margin: -32px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 快速篩選按鈕列 */
+        .filter-bar {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            border: 1px solid #ffffff;
+        }
+
+        .filter-btn {
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-            transition: all 0.3s ease;
+            background: #ffffff;
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.25);
+        }
+
+        /* 24堂課網格 */
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 22px;
+        }
+
+        /* 單張課程卡片 */
+        .lesson-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
             text-decoration: none;
             color: inherit;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.04);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-            border-color: #cbd5e1;
+
+        .lesson-card::top {
+            content: "";
         }
-        .lesson-number {
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
+
+        .lesson-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(13, 148, 136, 0.1);
         }
-        .lesson-title {
-            font-size: 18px;
-            font-weight: bold;
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .lesson-badge {
+            background: #eff6ff;
             color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 4px 12px;
+            border-radius: 8px;
+        }
+
+        .lesson-card:hover .lesson-badge {
+            background: var(--accent-light);
+            color: #0f766e;
+        }
+
+        .lesson-num-bg {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f1f5f9;
+            line-height: 1;
+            user-select: none;
+            transition: color 0.28s ease;
+        }
+
+        .lesson-card:hover .lesson-num-bg {
+            color: #e2e8f0;
+        }
+
+        .lesson-title {
+            font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-main);
             margin: 0 0 8px 0;
         }
+
         .lesson-desc {
-            font-size: 14px;
-            color: var(--text-sub);
+            font-size: 13.5px;
+            color: var(--text-muted);
             margin: 0 0 20px 0;
+            line-height: 1.55;
         }
+
         .card-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--accent);
-            border-top: 1px solid #f1f5f9;
             padding-top: 14px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary);
+            transition: color 0.2s ease;
         }
-        .card-footer span::after {
-            content: " →";
-            transition: transform 0.2s;
+
+        .lesson-card:hover .card-footer {
+            color: var(--accent);
         }
-        .card:hover .card-footer span::after {
+
+        .arrow-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        .lesson-card:hover .arrow-circle {
+            background: var(--accent);
+            color: #ffffff;
             transform: translateX(4px);
         }
-        footer.site-footer {
+
+        footer {
             text-align: center;
-            margin-top: 60px;
-            font-size: 12px;
-            color: var(--text-sub);
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
+    <header class="hero">
+        <div class="badge-top">Modern Chinese Preview Portal</div>
         <h1>AIオンライン中国語予習プラットフォーム</h1>
-        <p class="subtitle">《時代華語》レッスン別 予習・音声学習ポータル</p>
+        <p>《時代華語》レッスン別 予習・音声学習ポータル（全24課）</p>
     </header>
 
-    <div class="grid">
-        <!-- 第18課卡片 -->
-        <a href="lesson18.html" class="card">
-            <div>
-                <div class="lesson-number">LESSON 18</div>
-                <div class="lesson-title">最近感冒的人很多</div>
-                <div class="lesson-desc">健康と身体の調子、症状の表現、薬局・病院でのやり取り、条件表現。</div>
-            </div>
-            <div class="card-footer">
-                <span>予習ページへ進む</span>
-            </div>
-        </a>
+    <main class="container">
+        <!-- 篩選列 -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterLessons('all', this)">すべて表示 (24課)</button>
+            <button class="filter-btn" onclick="filterLessons('1-8', this)">Lesson 1 – 8</button>
+            <button class="filter-btn" onclick="filterLessons('9-16', this)">Lesson 9 – 16</button>
+            <button class="filter-btn" onclick="filterLessons('17-24', this)">Lesson 17 – 24</button>
+        </div>
 
-        <!-- 未來可以繼續新增其他課 -->
-        <!-- 
-        <a href="lesson19.html" class="card">
-            <div>
-                <div class="lesson-number">LESSON 19</div>
-                <div class="lesson-title">次回のテーマタイトル</div>
-                <div class="lesson-desc">レッスンの簡単な説明やキーワードをここに記載します。</div>
-            </div>
-            <div class="card-footer">
-                <span>予習ページへ進む</span>
-            </div>
-        </a>
-        -->
-    </div>
+        <!-- 24堂課卡片容器 -->
+        <div class="lesson-grid" id="lessonGrid"></div>
+    </main>
 
-    <footer class="site-footer">
-        &copy; 2026 台灣英里留學社 All Rights Reserved.
+    <footer>
+        © AIオンライン中国語予習プラットフォーム | 《時代華語》学習サポート
     </footer>
-</div>
 
-</body>
-</html>
+    <script>
+        // 您可以在這裡直接修改各課的課文標題與日文簡介！
+        const lessons = [
+            { num: 1,  title: "第1課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 2,  title: "第2課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 3,  title: "第3課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 4,  title: "第4課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 5,  title: "第5課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 6,  title: "第6課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 7,  title: "第7課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 8,  title: "第8課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 9,  title: "第9課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 10, title: "第10課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 11, title: "第11課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 12, title: "第12課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 13, title: "第13課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 14, title: "第14課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 15, title: "第15課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 16, title: "第16課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 17, title: "第17課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
+            { num: 18, title: "最近感冒的人很多", desc: "健康と身体の調子、症状の表現、薬局・病院でのやり取り、条件表現。" },
+            { num: 19, title: "第19課 タイトルを入力", desc: "単語の予習、文法ポイント、音声リスニング練習。" },
